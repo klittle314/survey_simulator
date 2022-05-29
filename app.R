@@ -16,7 +16,7 @@ ui = fluidPage(
       
       tags$div(class="header", checked=NA,
                tags$p("Want more details about this app?"),
-               tags$a(href="http://iecodesign.com/test.pdf", "Click here for a pdf file.")),         
+               tags$a(href="https://github.com/klittle314/survey_simulator/blob/master/Details%20of%20the%20Survey%20Simulator%20web%20application.pdf", "Click here for a pdf file.")),         
       h3(""),
       sliderInput("p", 'Reference per cent for good performance (per cent "success"):', min=50, max=99, value = 80),
       sliderInput("obs", "Number of surveyed patients in the sample:", min = 5, max = 300, value = 30),
@@ -30,7 +30,7 @@ ui = fluidPage(
           em(
             span("Created by "),
             a("Kevin Little,Ph.D.", href = "mailto:klittle@iecodesign.com"),
-            span(",Informing Ecological Design, LLC, 12 October 2015"),
+            span(",Informing Ecological Design, LLC, revised 30 May 2022"),
             br(), br()
           )
       
@@ -71,9 +71,11 @@ server = function(input, output, session) {
     # wbins <- range_use/10
     p_01 <- 100*pcalcs()[[2]][1]
     p_99 <- 100*pcalcs()[[2]][7]
+    #browser()
     plot_1 <- ggplot(data=df1,aes(x=phats))+
       geom_histogram(aes(y=..density..),binwidth=wbins,colour="black",fill="grey")
-    range_out <- ggplot_build(plot_1)$panel$ranges[[1]]$x.range
+    #range_out <- ggplot_build(plot_1)$panel$ranges[[1]]$x.range
+    range_out <- ggplot_build(plot_1)$layout$panel_scales_x[[1]]$range$range
   })
   
   #capture the max and min of the graph y axis
@@ -95,7 +97,8 @@ server = function(input, output, session) {
     plot_1 <- ggplot(data=df1,aes(x=phatsHG))+
       geom_histogram(aes(y=..density..),binwidth=wbins,colour="black",fill="grey") #+
       #geom_histogram(binwidth=wbins,colour="black",fill="grey")
-    range_out <- ggplot_build(plot_1)$panel$ranges[[1]]$y.range
+    #range_out <- ggplot_build(plot_1)$panel$ranges[[1]]$y.range
+    range_out <- ggplot_build(plot_1)$layout$panel_scales_y[[1]]$range$range
   })
   
   
@@ -113,9 +116,11 @@ server = function(input, output, session) {
     p_01 <- 100*pcalcs()[[2]][1]
     p_99 <- 100*pcalcs()[[2]][7]
     plot_xmin <- range_binom()[1]
-    plot_xmax <- range_binom()[2]
+    plot_xmax <- min(range_binom()[2],100)
     plot_ymin <- range_y()[1]
     plot_ymax <- range_y()[2]
+    
+    #browser()
     plot_1 <- ggplot(data=df1,aes(x=phats))+
       geom_histogram(aes(y=..density..),binwidth=wbins,colour="black",fill="grey")+
       #geom_histogram(binwidth=wbins,colour="black",fill="grey")+
@@ -169,10 +174,11 @@ server = function(input, output, session) {
     p_01 <- 100*pcalcsHG()[[2]][1]
     p_99 <- 100*pcalcsHG()[[2]][7]
     plot_xmin <- range_binom()[1]
-    plot_xmax <- range_binom()[2]
+    plot_xmax <- min(range_binom()[2],100)
     plot_ymin <- range_y()[1]
     plot_ymax <- range_y()[2]
-    plot_1 <- ggplot(data=df1,aes(x=phatsHG))+
+   #browser()
+     plot_1 <- ggplot(data=df1,aes(x=phatsHG))+
       geom_histogram(aes(y=..density..),binwidth=wbins,colour="black",fill="grey")+
       #geom_histogram(binwidth=wbins,colour="black",fill="grey")+
       theme_bw()+
