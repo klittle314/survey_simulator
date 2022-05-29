@@ -4,8 +4,8 @@ shinyApp(
 ui = fluidPage(
   sidebarLayout(
     sidebarPanel(
-      img(src='_iedlogo_tiny2.gif.png', align = "left"),
-      h2("Build Your Intuition about Sampling Variation"),
+      img(src='_iedlogo.png', align = "left"),
+      h3("Build Your Intuition about Sampling Variation"),
       helpText("This app helps build your intuition about one souce of variation in survey results, ",
                "like surveys of patient experience data. When you change the number of patients surveyed, the rate of 'good performance'",
                " or the fraction of patients surveyed, the table and histograms update to show how estimated results vary,", 
